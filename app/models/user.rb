@@ -8,4 +8,5 @@ class User < ApplicationRecord
   validates :mail, presence: true, uniqueness: true
   validates :password_digest, presence: true
   validates :nickname, presence: true
+  has_secure_password
 end
