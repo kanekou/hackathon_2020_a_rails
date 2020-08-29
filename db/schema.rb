@@ -34,10 +34,11 @@ ActiveRecord::Schema.define(version: 2020_08_29_033240) do
   end
 
   create_table "topics", force: :cascade do |t|
-    t.string "name"
-    t.datetime "default_delivery_time"
+    t.string "name", null: false
+    t.datetime "default_delivery_time", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_topics_on_name", unique: true
   end
 
   create_table "user_article_insights", force: :cascade do |t|
