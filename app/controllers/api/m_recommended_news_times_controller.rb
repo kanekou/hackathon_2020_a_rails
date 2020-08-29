@@ -1,4 +1,4 @@
-class MRecommendedNewsTimesController < ApiController
+class Api::MRecommendedNewsTimesController < ApiController
   def index
     response = {
       m_recommended_news_times: MRecommendedNewsTime.all.map do |m_recomended_news_time|
