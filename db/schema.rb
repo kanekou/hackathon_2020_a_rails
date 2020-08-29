@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_022022) do
+ActiveRecord::Schema.define(version: 2020_08_29_024017) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "adresses", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "adress"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_adresses_on_user_id"
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string "name"
+    t.datetime "default_delivery_time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user_topic_insigthts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "topic_id", null: false
+    t.integer "views"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["topic_id"], name: "index_user_topic_insigthts_on_topic_id"
+    t.index ["user_id"], name: "index_user_topic_insigthts_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
@@ -26,4 +51,7 @@ ActiveRecord::Schema.define(version: 2020_08_29_022022) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "adresses", "users"
+  add_foreign_key "user_topic_insigthts", "topics"
+  add_foreign_key "user_topic_insigthts", "users"
 end
