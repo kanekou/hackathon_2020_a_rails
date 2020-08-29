@@ -76,14 +76,15 @@ ActiveRecord::Schema.define(version: 2020_08_29_033240) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "nickname"
-    t.string "password_digest"
+    t.string "email", null: false
+    t.string "nickname", null: false
+    t.string "password_digest", null: false
     t.datetime "everyday_news_delivery_time"
     t.datetime "heat_stroke_news_delivery_time"
     t.string "api_key"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "adresses", "users"
