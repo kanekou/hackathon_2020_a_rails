@@ -14,8 +14,8 @@ class User < ApplicationRecord
   private
 
   def set_api_key
-    api_key = SecureRandom.base64(32)
-    api_key = SecureRandom.base64(32) while User.find_by(api_key: api_key)
+    api_key = SecureRandom.base64(32)[0, 32]
+    api_key = SecureRandom.base64(32)[0, 32] while User.find_by(api_key: api_key)
     self.api_key = api_key
   end
 end
