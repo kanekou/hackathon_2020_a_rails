@@ -29,7 +29,7 @@ def get_news():
     description = description1 + description2
     probs = model.predict(description)
 
-    top_indice = news.calc_top_5(probs, num_topics=len(model.TOPICS))
+    top_indice = news.calc_top_n(probs, n=10, num_topics=len(model.TOPICS))
 
     topic_list = list(model.TOPICS.keys())
     responce = {'articles': []}

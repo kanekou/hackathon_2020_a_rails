@@ -55,14 +55,14 @@ def get_from_nhk():
 
     return articles, descriptions
 
-def calc_top_5(probs, num_topics):
+def calc_top_n(probs, n, num_topics):
     # 予測されたラベル列
     pred_labels = np.argmax(probs, axis=1)
-    top_5_indices = []
+    top_n_indices = []
     for l in range(num_topics):
         indice = np.where(pred_labels == l)
         tmp = probs[indice]
-        top_5 = np.argsort(tmp[:, l])[::-1][:5]
-        top_5_indices.append(indice[0][top_5])
+        top_n = np.argsort(tmp[:, l])[::-1][:n]
+        top_n_indices.append(indice[0][top_n])
 
-    return top_5_indices
+    return top_n_indices
