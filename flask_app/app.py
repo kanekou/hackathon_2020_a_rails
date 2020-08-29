@@ -1,15 +1,19 @@
+import os
+import sys
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+# import gensim
 from flask import Flask, jsonify
-from newsapi import NewsApiClient
-from datetime import datetime as dt
-from datetime import timedelta
+import src.news as news
+import src.topicestimator as te
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
+model = te.TopicEstimator()
 
-newsapi = NewsApiClient(api_key='d9cc224113f649869ee2ee4e25198595')
 
 @app.route("/")
 def hello():
+    print(sys.path)
     return "Hello, Flask! in Repository"
 
 @app.route('/test')
@@ -18,20 +22,24 @@ def test():
 
 @app.route('/get_news')
 def get_news():
-    headlines = newsapi.get_top_headlines(country='jp')
-    ret = {}
-    articles = []
-    for a in headlines['articles']:
-        item = {}
-        item['title'] = a['title']
-        item['summary'] = a['description']
-        item['url'] = a['url']
-        item['image'] = a['urlToImage']
-        item['written_at'] = (dt.strptime(a['publishedAt'], '%Y-%m-%dT%H:%M:%SZ') + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M:%S')
-        articles.append(item)
+    articles1, description1 = news.get_from_newsapi()
+    articles2, description2 = news.get_from_nhk()
 
-    ret['articles'] = articles[:5]
-    return jsonify(ret)
+    articles = articles1 + articles2
+    description = description1 + description2
+    probs = model.predict(description)
+
+    top_indice = news.calc_top_5(probs, num_topics=len(model.TOPICS))
+
+    topic_list = list(model.TOPICS.keys())
+    responce = {'articles': []}
+    for i, indice in enumerate(top_indice):
+        for idx in indice:
+            target = articles[idx]
+            target['topic'] = topic_list[i]
+            responce['articles'].append(target)
+
+    return jsonify(responce)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
