@@ -3,14 +3,14 @@ class Api::UsersController < ApiController
 
   def show
     response = {
-      user: @user.attributes.slice(:nickname, :email)
+      user: @user.attributes.slice("nickname", "email")
     }
     render json: response
   end
 
   def update
     response = {
-      user: @user.attributes.slice(:nickname, :email)
+      user: @user.attributes.slice("nickname", "email")
     }
     if @user.update(user_params)
       render json: response

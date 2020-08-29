@@ -1,13 +1,14 @@
-class ApiController < ActionController::API
+class Api::AuthenticateController < ApiController
   def sign_up
     user = User.new(user_params)
     user.password_confirmation = user.password
-    if user.save?
+    if user.save
       response = {
-        user: user.attributes.slice(:email, :api_key),
+        user: user.attributes.slice("email", "api_key"),
       }
       render json: response
     else
+      puts user.errors.full_messages
       render plain: "bad requrest", status: 400
     end
   end
@@ -18,7 +19,7 @@ class ApiController < ActionController::API
 
     if user.authenticate(params[:password])
       response = {
-        user: user.slice(:nickname, :email, :api_key)
+        user: user.slice("nickname", "email", "api_key")
       }
       render json: response
     else

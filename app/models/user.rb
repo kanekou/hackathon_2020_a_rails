@@ -7,10 +7,7 @@ class User < ApplicationRecord
   has_many :user_recommended_news_histories
   has_many :user_articles_insights
 
-  validates :nickname, presence: true
-  validates :mail, presence: true, uniqueness: true
-  validates :password_digest, presence: true
-  validates :nickname, presence: true
+  validates :email, presence: true, uniqueness: true
 
   before_save :set_api_key
 
@@ -18,7 +15,7 @@ class User < ApplicationRecord
 
   def set_api_key
     api_key = SecureRandom.base64(32)
-    loop { api_key = SecureRandom.base64(32) if User.find_by(api_key: api_key) }
+    api_key = SecureRandom.base64(32) while User.find_by(api_key: api_key)
     self.api_key = api_key
   end
 end
