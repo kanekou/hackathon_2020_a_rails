@@ -9,5 +9,6 @@ Rails.application.routes.draw do
     resources :articles, only: [:index]
     resources :users, only: [:show, :update]
     resources :user_recommended_news_histories, only: [:index]
+    resources :m_recommended_news_times, only: [:index]
   end
 end
