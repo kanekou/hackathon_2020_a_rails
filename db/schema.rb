@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_030631) do
+ActiveRecord::Schema.define(version: 2020_08_29_031834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,13 @@ ActiveRecord::Schema.define(version: 2020_08_29_030631) do
     t.index ["user_id"], name: "index_user_article_insights_on_user_id"
   end
 
+  create_table "user_recommend_news_histories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_recommend_news_histories_on_user_id"
+  end
+
   create_table "user_topic_insigthts", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "topic_id", null: false
@@ -74,6 +81,7 @@ ActiveRecord::Schema.define(version: 2020_08_29_030631) do
   add_foreign_key "articles", "topics"
   add_foreign_key "user_article_insights", "articles"
   add_foreign_key "user_article_insights", "users"
+  add_foreign_key "user_recommend_news_histories", "users"
   add_foreign_key "user_topic_insigthts", "topics"
   add_foreign_key "user_topic_insigthts", "users"
 end
