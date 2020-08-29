@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
   namespace :api do
-    resources :users, only: [:show, :update]
     resources :authenticate, only: [] do
       collection do
         post :sign_up
         post :login
       end
     end
+    resources :articles, only: [:index]
+    resources :users, only: [:show, :update]
+    resources :user_recommended_news_histories, only: [:index]
   end
 end
