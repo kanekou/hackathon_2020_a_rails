@@ -30,7 +30,7 @@ def get_news():
         item['written_at'] = (dt.strptime(a['publishedAt'], '%Y-%m-%dT%H:%M:%SZ') + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M:%S')
         articles.append(item)
 
-    ret['articles'] = articles
+    ret['articles'] = articles[:5]
     return jsonify(ret)
 
 if __name__ == "__main__":
