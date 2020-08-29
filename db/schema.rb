@@ -15,12 +15,12 @@ ActiveRecord::Schema.define(version: 2020_08_29_033240) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "adresses", force: :cascade do |t|
+  create_table "addresses", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.integer "adress"
+    t.integer "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_adresses_on_user_id"
+    t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
   create_table "articles", force: :cascade do |t|
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2020_08_29_033240) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "adresses", "users"
+  add_foreign_key "addresses", "users"
   add_foreign_key "articles", "topics"
   add_foreign_key "user_article_insights", "articles"
   add_foreign_key "user_article_insights", "users"
