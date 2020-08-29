@@ -10,20 +10,91 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_022022) do
+ActiveRecord::Schema.define(version: 2020_08_29_033240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "addresses", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_addresses_on_user_id"
+  end
+
+  create_table "articles", force: :cascade do |t|
+    t.bigint "topic_id", null: false
+    t.string "title"
+    t.string "summary"
+    t.string "url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["topic_id"], name: "index_articles_on_topic_id"
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "default_delivery_time", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_topics_on_name", unique: true
+  end
+
+  create_table "user_article_insights", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "article_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_user_article_insights_on_article_id"
+    t.index ["user_id"], name: "index_user_article_insights_on_user_id"
+  end
+
+  create_table "user_recommended_news_histories", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_recommended_news_histories_on_user_id"
+  end
+
+  create_table "user_recommended_news_history_articles", force: :cascade do |t|
+    t.bigint "user_recommended_news_history_id", null: false
+    t.bigint "article_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["article_id"], name: "index_user_recommended_news_history_articles_on_article_id"
+    t.index ["user_recommended_news_history_id"], name: "user_recommended_news_history_id"
+  end
+
+  create_table "user_topic_insigthts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "topic_id", null: false
+    t.integer "views"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["topic_id"], name: "index_user_topic_insigthts_on_topic_id"
+    t.index ["user_id"], name: "index_user_topic_insigthts_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "nickname"
-    t.string "password_digest"
+    t.string "email", null: false
+    t.string "nickname", null: false
+    t.string "password_digest", null: false
     t.datetime "everyday_news_delivery_time"
     t.datetime "heat_stroke_news_delivery_time"
     t.string "api_key"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "addresses", "users"
+  add_foreign_key "articles", "topics"
+  add_foreign_key "user_article_insights", "articles"
+  add_foreign_key "user_article_insights", "users"
+  add_foreign_key "user_recommended_news_histories", "users"
+  add_foreign_key "user_recommended_news_history_articles", "articles"
+  add_foreign_key "user_recommended_news_history_articles", "user_recommended_news_histories"
+  add_foreign_key "user_topic_insigthts", "topics"
+  add_foreign_key "user_topic_insigthts", "users"
 end
