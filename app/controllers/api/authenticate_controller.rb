@@ -13,10 +13,9 @@ class Api::AuthenticateController < ApiController
   end
 
   def login
-    user = User.find_by(email: params[:email])
-    return render plain: "not found", status: 403
+    user = User.find_by(email: user_params[:email])
 
-    if user.authenticate(params[:password])
+    if user.authenticate(user_params[:password])
       response = {
         user: user.slice("nickname", "email", "api_key")
       }
