@@ -22,6 +22,8 @@ class TopicEstimator:
         """
         tagger = MeCab.Tagger('mecabrc')  # 別のTaggerを使ってもいい
         mecab_result = tagger.parse(text)
+        if not(mecab_result):
+            return []
         info_of_words = mecab_result.split('\n')
         words = []
         for info in info_of_words:
