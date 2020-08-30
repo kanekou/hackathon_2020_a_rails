@@ -1,4 +1,7 @@
 :schedule:
   hello_world:
-    cron: "0 */5 * * * *"
+    cron: "0 * 6 * * *"
     class: HelloWorldWorker
+  collection_artlce:
+    cron: "0 */30 * * * *"
+    class: CollectArticleWorker
