@@ -28,8 +28,8 @@ class CollectArticleWorker
   private
 
   def fetch_articles
-    print "fetch articles from flask server...... "
     url = ENV["FLASK_URL"] + "/get_news"
+    print "fetch articles from flask server(#{url}) ...... "
     res = Net::HTTP.get(URI.parse(url))
     articles = JSON.parse(res)["articles"]
     puts "success"
