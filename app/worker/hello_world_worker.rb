@@ -1,4 +1,4 @@
-class HelloWorldWorker < ApplicationJob
+class HelloWorldWorker
   include Sidekiq::Worker
 
   def perform(*_args)

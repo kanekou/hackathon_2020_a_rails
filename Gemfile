@@ -20,6 +20,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'dotenv-rails'
 gem 'sidekiq'
+gem 'sidekiq-scheduler'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
