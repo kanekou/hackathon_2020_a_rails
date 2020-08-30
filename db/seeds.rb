@@ -9,7 +9,7 @@
 [
     [Time.parse("7:00"), :morning],
     [Time.parse("12:00"), :daytime],
-    [Time.parse("19:00"), :night],
+    [Time.parse("19:00"), :night]
 ].each do |recommend_time, period|
   MRecommendedNewsTime.create!(recommend_time: recommend_time, period: period)
 end
