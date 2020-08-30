@@ -33,8 +33,8 @@ class CollectArticleWorker
     res = Net::HTTP.get(URI.parse(url))
     articles = JSON.parse(res)["articles"]
     puts "success"
+    System.out.flush()
     articles
-    JSON.parse(res)["articles"]
   rescue => e
     puts "failed"
     puts e
