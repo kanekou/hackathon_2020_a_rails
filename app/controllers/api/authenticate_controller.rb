@@ -8,6 +8,7 @@ class Api::AuthenticateController < ApiController
       }
       render json: response
     else
+      puts user.errors.full_messages
       render plain: "bad requrest", status: 400
     end
   end
@@ -21,6 +22,7 @@ class Api::AuthenticateController < ApiController
       }
       render json: response
     else
+      puts user.errors.full_messages
       render plain: "not found", status: 403
     end
   end
