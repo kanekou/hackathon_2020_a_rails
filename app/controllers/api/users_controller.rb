@@ -15,6 +15,7 @@ class Api::UsersController < ApiController
     if @user.update(user_params)
       render json: response
     else
+      @user.errors.full_messages
       render json: @user.errors
     end
   end
