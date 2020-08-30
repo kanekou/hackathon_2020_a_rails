@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   namespace :api do
     resources :authenticate, only: [] do
@@ -11,4 +13,6 @@ Rails.application.routes.draw do
     resources :user_recommended_news_histories, only: [:index]
     resources :m_recommended_news_times, only: [:index]
   end
+
+  mount Sidekiq::Web => "/sidekiq"
 end
