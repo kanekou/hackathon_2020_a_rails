@@ -6,7 +6,6 @@ class CollectArticleWorker
   include Sidekiq::Worker
 
   def perform(*_args)
-    url = ENV["FLASK_URL"] + "/get_news"
     articles = fetch_articles
 
     count = 0
@@ -30,6 +29,7 @@ class CollectArticleWorker
 
   def fetch_articles
     print "fetch articles from flask server...... "
+    url = ENV["FLASK_URL"] + "/get_news"
     res = Net::HTTP.get(URI.parse(url))
     articles = JSON.parse(res)["articles"]
     puts "success"
