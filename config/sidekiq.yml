@@ -3,5 +3,5 @@
     cron: "0 * 6 * * *"
     class: HelloWorldWorker
   collection_artlce:
-    cron: "0 */30 * * * *"
+    cron: "0 */1 * * * *"
     class: CollectArticleWorker
